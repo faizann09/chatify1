@@ -16,7 +16,7 @@ app.use("/api", geminiBotRoute);
 // Setup socket server with CORS
 const io = new Server(server, {
   cors: {
-    origin: "https://chatify1-e482.onrender.com", // ✅ No trailing slash
+    origin: "http://localhost:4001", // ✅ No trailing slash
     methods: ["GET", "POST"],
     credentials: true,
   },

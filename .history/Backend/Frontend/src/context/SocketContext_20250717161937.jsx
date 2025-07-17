@@ -28,7 +28,7 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const backendURL = "https://chatify1-e482.onrender.com";
+    const backendURL = ""
 
     console.log("🔌 Connecting to:", backendURL);
 

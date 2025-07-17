@@ -28,7 +28,9 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const backendURL = "https://chatify1-e482.onrender.com";
+    const backendURL = import.meta.env.PROD
+      ? "https://chatify-tihl.onrender.com"
+      : "http://localhost:5002";
 
     console.log("🔌 Connecting to:", backendURL);
 
