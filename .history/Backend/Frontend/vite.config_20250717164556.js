@@ -10,7 +10,7 @@ export default defineConfig({
     port: 4001,
     proxy: {
       "/api": {
-        target: "https://chatify1-e482.onrender.com",
+        target: "http://localhost:5002",
         changeOrigin: true,
       },
     },
