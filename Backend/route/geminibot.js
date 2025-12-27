@@ -2,34 +2,38 @@ import express from "express";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-dotenv.config(); // ✅ Make sure env variables are loaded here
+dotenv.config();
 
 const router = express.Router();
 
-// ✅ Validate API key presence
 if (!process.env.GEMINI_API_KEY) {
-  console.error("❌ GEMINI_API_KEY not found in .env file!");
+  console.error("❌ GEMINI_API_KEY not found in environment variables");
 }
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 router.post("/", async (req, res) => {
-  const { message } = req.body;
-
-  if (!message) {
-    return res.status(400).json({ error: "Message is required." });
-  }
-
   try {
-    const model = genAI.getGenerativeModel({model: "gemini-1.5-flash-latest" });
-    const chat = model.startChat();
-    const result = await chat.sendMessage(message);
+    const { message } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: "Message is required" });
+    }
+
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash-latest",
+    });
+
+    const result = await model.generateContent(message);
     const reply = result.response.text();
 
-    res.json({ reply });
+    return res.status(200).json({ reply });
   } catch (error) {
-    console.error("❌ Gemini Error:", error.message);
-    res.status(500).json({ error: "Bot failed to respond" });
+    console.error("❌ Gemini Full Error:", error);
+    return res.status(500).json({
+      error: "Gemini API failed",
+      details: error.message,
+    });
   }
 });
 
