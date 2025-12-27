@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({model: "gemini-1.5-flash-latest" });
     const chat = model.startChat();
     const result = await chat.sendMessage(message);
     const reply = result.response.text();
